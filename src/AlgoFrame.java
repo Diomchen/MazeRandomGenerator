@@ -35,7 +35,6 @@ public class AlgoFrame extends JFrame {
     private MazeData data;
     public void render(MazeData data){
         this.data = data;
-
         repaint();
     }
 
@@ -68,7 +67,10 @@ public class AlgoFrame extends JFrame {
 
             for(int i=0 ; i<data.getN() ; i++){
                 for(int j=0 ; j<data.getM() ; j++){
-                    if(data.Maze[i][j] == MazeData.WALL){
+                    if(data.inMist[i][j]){
+                        AlgoVisHelper.setColor(graphics2D,AlgoVisHelper.Black);
+                    }
+                    else if(data.Maze[i][j] == MazeData.WALL){
                         AlgoVisHelper.setColor(graphics2D,AlgoVisHelper.LightBlue);
                     }
                     else if(data.Maze[i][j] == MazeData.ROAD){

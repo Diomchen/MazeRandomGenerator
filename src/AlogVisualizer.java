@@ -76,9 +76,9 @@ public class AlogVisualizer {
     //BFS  随机队列数组生成迷宫
     RandomQueue<Position> queue = new RandomQueue<>();
     Position position = new Position(data.getStartX(),data.getStartY()+1);
-        queue.add(position);
+    queue.add(position);
     data.visited[position.getX()][position.getY()] = true;
-
+    data.openMist(position.getX(),position.getY());
         while(queue.size() != 0){
         Position curPos = queue.remove();
         for(int i=0 ; i<4 ; i++){
@@ -89,6 +89,7 @@ public class AlogVisualizer {
             if(data.inArea(newX,newY)&& !data.visited[newX][newY]){
                 queue.add(new Position(newX,newY));
                 data.visited[newX][newY] = true;
+                data.openMist(newX,newY);
                 setData(curPos.getX()+d[i][0],curPos.getY()+d[i][1]);
             }
         }
