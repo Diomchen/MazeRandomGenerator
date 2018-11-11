@@ -1,11 +1,23 @@
 public class MazeData {
 
-    private static final char ROAD = ' ';
-    private static final char WALL = '#';
+    public static final char ROAD = ' ';
+    public static final char WALL = '#';
 
     private int M,N;
     //   N：行      M:列
-    private char[][] Maze;
+    public int getM() {
+        return M;
+    }
+
+    public int getN() {
+        return N;
+    }
+
+    public char[][] Maze;
+
+    public void setMaze(char[][] maze) {
+        Maze = maze;
+    }
 
     private int startX,startY,endX,endY;
 
@@ -22,15 +34,15 @@ public class MazeData {
         for(int i=0 ; i<N ; i++){
             for(int j=0 ; j<M ; j++){
                 if(i%2!=0 && j%2!=0){
-                    Maze[i][j] = ' ';
+                    Maze[i][j] = ROAD;
                 }
                 else{
-                    Maze[i][j] = '#';
+                    Maze[i][j] = WALL;
                 }
             }
         }
-        startX = 0;
-        startY = 1;
+        startX = 1;
+        startY = 0;
         endX = N-2;
         endY = M-1;
         Maze[startX][startY] = Maze[endX][endY] = ROAD;

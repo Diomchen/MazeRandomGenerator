@@ -57,10 +57,25 @@ public class AlgoFrame extends JFrame {
 
             //抗锯齿
             RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-
-            hints.put(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+//
+//            hints.put(RenderingHints.KEY_COLOR_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
             graphics2D.addRenderingHints(hints);
 
+            //绘制
+            int w = canvasWidth/data.getM();
+            int h = canvasWidth/data.getN();
+
+            for(int i=0 ; i<data.getN() ; i++){
+                for(int j=0 ; j<data.getM() ; j++){
+                    if(data.Maze[i][j] == MazeData.WALL){
+                        AlgoVisHelper.setColor(graphics2D,AlgoVisHelper.LightBlue);
+                    }
+                    else if(data.Maze[i][j] == MazeData.ROAD){
+                        AlgoVisHelper.setColor(graphics2D,AlgoVisHelper.White);
+                    }
+                    AlgoVisHelper.fillRectangle(graphics2D,j*w,i*h,w,h);
+                }
+            }
 
 
         }
