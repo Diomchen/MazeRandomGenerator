@@ -3,6 +3,9 @@ public class MazeData {
     public static final char ROAD = ' ';
     public static final char WALL = '#';
 
+    public static int d[][] = {{-1,0},{0,1},{1,0},{0,-1}};
+    public boolean[][] visited ;
+
     private int M,N;
     //   N：行      M:列
     public int getM() {
@@ -19,9 +22,25 @@ public class MazeData {
         Maze = maze;
     }
 
-    private int startX,startY,endX,endY;
+    public int startX,startY,endX,endY;
 
-    public MazeData(int N,int M){
+    public int getStartX() {
+        return startX;
+    }
+
+    public int getStartY() {
+        return startY;
+    }
+
+    public int getEndX() {
+        return endX;
+    }
+
+    public int getEndY() {
+        return endY;
+    }
+
+    public MazeData(int N, int M){
         if(M%2==0 || N%2==0){
             throw new IllegalArgumentException("M and N is Illegal!");
         }
@@ -30,6 +49,7 @@ public class MazeData {
         this.N = N;
 
         Maze = new char[N][M];
+        visited = new boolean[N][M];
 
         for(int i=0 ; i<N ; i++){
             for(int j=0 ; j<M ; j++){
@@ -39,12 +59,17 @@ public class MazeData {
                 else{
                     Maze[i][j] = WALL;
                 }
+                visited[i][j] = false;
             }
         }
-        startX = 1;
-        startY = 0;
-        endX = N-2;
-        endY = M-1;
+        this.startX = 1;
+        this.startY = 0;
+        this.endX = N-2;
+        this.endY = M-1;
         Maze[startX][startY] = Maze[endX][endY] = ROAD;
+    }
+
+    public boolean inArea(int x,int y){
+        return x>0 && y>0 && x<N && y<M;
     }
 }

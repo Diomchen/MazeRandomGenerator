@@ -35,6 +35,7 @@ public class AlgoFrame extends JFrame {
     private MazeData data;
     public void render(MazeData data){
         this.data = data;
+
         repaint();
     }
 
