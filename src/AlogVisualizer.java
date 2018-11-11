@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class AlogVisualizer {
@@ -23,31 +24,52 @@ public class AlogVisualizer {
 
     public void run(){
         setData(-1,-1);
-        //recursion方法
+        //recursion-DFS方法
 //        go(data.getStartX(),data.getStartY()+1);
 
-        //NotRecursion方法
-        Stack<Position> stack = new Stack<>();
+        //NotRecursion-DFS方法
+//        Stack<Position> stack = new Stack<>();
+//        Position position = new Position(data.getStartX(),data.getStartY()+1);
+//        stack.push(position);
+//        data.visited[position.getX()][position.getY()] = true;
+//
+//        while(!stack.empty()){
+//            Position curPos = stack.pop();
+//
+//            for(int i=0 ; i<4 ; i++){
+//                int newX = curPos.getX()+d[i][0]*2;
+//                int newY = curPos.getY()+d[i][1]*2;
+//
+//                //判断是否超出范围或者是是否已经遍历过
+//                if(data.inArea(newX,newY)&& !data.visited[newX][newY]){
+//                    stack.push(new Position(newX,newY));
+//                    data.visited[newX][newY] = true;
+//                    setData(curPos.getX()+d[i][0],curPos.getY()+d[i][1]);
+//                }
+//            }
+//        }
+
+        //NotRecursion-BFS
+        //方法就是把DFS的stack换成LinkedList
+        LinkedList<Position> queue = new LinkedList<>();
         Position position = new Position(data.getStartX(),data.getStartY()+1);
-        stack.push(position);
+        queue.addLast(position);
         data.visited[position.getX()][position.getY()] = true;
 
-        while(!stack.empty()){
-            Position curPos = stack.pop();
-
+        while(queue.size() != 0){
+            Position curPos = queue.removeFirst();
             for(int i=0 ; i<4 ; i++){
                 int newX = curPos.getX()+d[i][0]*2;
                 int newY = curPos.getY()+d[i][1]*2;
 
                 //判断是否超出范围或者是是否已经遍历过
                 if(data.inArea(newX,newY)&& !data.visited[newX][newY]){
-                    stack.push(new Position(newX,newY));
+                    queue.addLast(new Position(newX,newY));
                     data.visited[newX][newY] = true;
                     setData(curPos.getX()+d[i][0],curPos.getY()+d[i][1]);
                 }
             }
         }
-
         setData(-1,-1);
     }
 
