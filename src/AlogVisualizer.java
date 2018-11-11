@@ -1,12 +1,13 @@
 import java.awt.*;
+import java.util.Stack;
 
 public class AlogVisualizer {
-    private static int DENY = 5;
+    private static int DENY = 3;
     private static int blockSide = 8;
 
     private MazeData data;
     private AlgoFrame frame;
-
+    public static int d[][] = {{-1,0},{0,1},{1,0},{0,-1}};
     public AlogVisualizer(int N , int M){
         data = new MazeData(N,M);
         int sceneHeight = data.getN()*blockSide;
@@ -22,8 +23,30 @@ public class AlogVisualizer {
 
     public void run(){
         setData(-1,-1);
+        //recursion方法
+//        go(data.getStartX(),data.getStartY()+1);
 
-        go(data.getStartX(),data.getStartY()+1);
+        //NotRecursion方法
+        Stack<Position> stack = new Stack<>();
+        Position position = new Position(data.getStartX(),data.getStartY()+1);
+        stack.push(position);
+        data.visited[position.getX()][position.getY()] = true;
+
+        while(!stack.empty()){
+            Position curPos = stack.pop();
+
+            for(int i=0 ; i<4 ; i++){
+                int newX = curPos.getX()+d[i][0]*2;
+                int newY = curPos.getY()+d[i][1]*2;
+
+                //判断是否超出范围或者是是否已经遍历过
+                if(data.inArea(newX,newY)&& !data.visited[newX][newY]){
+                    stack.push(new Position(newX,newY));
+                    data.visited[newX][newY] = true;
+                    setData(curPos.getX()+d[i][0],curPos.getY()+d[i][1]);
+                }
+            }
+        }
 
         setData(-1,-1);
     }
@@ -37,17 +60,18 @@ public class AlogVisualizer {
         AlgoVisHelper.pause(DENY);
     }
 
+    //recursionGo
     public void go(int x,int y){
         if(!data.inArea(x,y)){
             throw new IllegalArgumentException(" x and y is oversize... ");
         }
         data.visited[x][y] = true;
         for(int i=0 ; i<4 ; i++){
-            int newX = x+MazeData.d[i][0]*2;
-            int newY = y+MazeData.d[i][1]*2;
+            int newX = x+d[i][0]*2;
+            int newY = y+d[i][1]*2;
             if(data.inArea(newX,newY) && !data.visited[newX][newY]){
                 //破墙
-                setData(x+MazeData.d[i][0],y+MazeData.d[i][1]);
+                setData(x+d[i][0],y+d[i][1]);
                 go(newX,newY);
             }
         }

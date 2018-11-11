@@ -3,7 +3,6 @@ public class MazeData {
     public static final char ROAD = ' ';
     public static final char WALL = '#';
 
-    public static int d[][] = {{-1,0},{0,1},{1,0},{0,-1}};
     public boolean[][] visited ;
 
     private int M,N;
