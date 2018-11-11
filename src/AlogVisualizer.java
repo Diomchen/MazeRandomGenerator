@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 public class AlogVisualizer {
-    private static int DENY = 3;
+    private static int DENY = 5;
     private static int blockSide = 8;
 
     private MazeData data;
@@ -51,27 +51,50 @@ public class AlogVisualizer {
 
         //NotRecursion-BFS
         //方法就是把DFS的stack换成LinkedList
-        LinkedList<Position> queue = new LinkedList<>();
-        Position position = new Position(data.getStartX(),data.getStartY()+1);
-        queue.addLast(position);
-        data.visited[position.getX()][position.getY()] = true;
+//        LinkedList<Position> queue = new LinkedList<>();
+//        Position position = new Position(data.getStartX(),data.getStartY()+1);
+//        queue.addLast(position);
+//        data.visited[position.getX()][position.getY()] = true;
+//
+//        while(queue.size() != 0){
+//            Position curPos = queue.removeFirst();
+//            for(int i=0 ; i<4 ; i++){
+//                int newX = curPos.getX()+d[i][0]*2;
+//                int newY = curPos.getY()+d[i][1]*2;
+//
+//                //判断是否超出范围或者是是否已经遍历过
+//                if(data.inArea(newX,newY)&& !data.visited[newX][newY]){
+//                    queue.addLast(new Position(newX,newY));
+//                    data.visited[newX][newY] = true;
+//                    setData(curPos.getX()+d[i][0],curPos.getY()+d[i][1]);
+//                }
+//            }
+//        }
+//        setData(-1,-1);
+//    }
+
+    //BFS  随机队列数组生成迷宫
+    RandomQueue<Position> queue = new RandomQueue<>();
+    Position position = new Position(data.getStartX(),data.getStartY()+1);
+        queue.add(position);
+    data.visited[position.getX()][position.getY()] = true;
 
         while(queue.size() != 0){
-            Position curPos = queue.removeFirst();
-            for(int i=0 ; i<4 ; i++){
-                int newX = curPos.getX()+d[i][0]*2;
-                int newY = curPos.getY()+d[i][1]*2;
+        Position curPos = queue.remove();
+        for(int i=0 ; i<4 ; i++){
+            int newX = curPos.getX()+d[i][0]*2;
+            int newY = curPos.getY()+d[i][1]*2;
 
-                //判断是否超出范围或者是是否已经遍历过
-                if(data.inArea(newX,newY)&& !data.visited[newX][newY]){
-                    queue.addLast(new Position(newX,newY));
-                    data.visited[newX][newY] = true;
-                    setData(curPos.getX()+d[i][0],curPos.getY()+d[i][1]);
-                }
+            //判断是否超出范围或者是是否已经遍历过
+            if(data.inArea(newX,newY)&& !data.visited[newX][newY]){
+                queue.add(new Position(newX,newY));
+                data.visited[newX][newY] = true;
+                setData(curPos.getX()+d[i][0],curPos.getY()+d[i][1]);
             }
         }
-        setData(-1,-1);
     }
+    setData(-1,-1);
+}
 
     public void setData(int x,int y){
         //判断是否是在范围内
