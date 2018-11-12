@@ -76,6 +76,13 @@ public class AlgoFrame extends JFrame {
                     else if(data.Maze[i][j] == MazeData.ROAD){
                         AlgoVisHelper.setColor(graphics2D,AlgoVisHelper.White);
                     }
+                    else if(!data.path[i][j]){
+                            AlgoVisHelper.setColor(graphics2D,AlgoVisHelper.White);
+                    }
+                    if(data.path[i][j]){
+                        AlgoVisHelper.setColor(graphics2D,AlgoVisHelper.DeepOrange);
+                    }
+
                     AlgoVisHelper.fillRectangle(graphics2D,j*w,i*h,w,h);
                 }
             }

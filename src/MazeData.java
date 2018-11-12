@@ -5,6 +5,7 @@ public class MazeData {
 
     public boolean[][] visited ;
     public boolean [][] inMist;
+    public boolean [][] path;
     private int M,N;
     //   N：行      M:列
     public int getM() {
@@ -50,6 +51,7 @@ public class MazeData {
         Maze = new char[N][M];
         visited = new boolean[N][M];
         inMist = new boolean[N][M];
+        path = new boolean[N][M];
 
         for(int i=0 ; i<N ; i++){
             for(int j=0 ; j<M ; j++) {
@@ -60,6 +62,7 @@ public class MazeData {
                 }
                 visited[i][j] = false;
                 inMist[i][j] = true;
+                path[i][j] = false;
             }
         }
         this.startX = 1;

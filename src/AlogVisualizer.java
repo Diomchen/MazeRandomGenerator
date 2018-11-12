@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -16,6 +17,7 @@ public class AlogVisualizer {
 
         EventQueue.invokeLater(()->{
             frame = new AlgoFrame("Maze",sceneWidth,sceneHeight);
+            frame.addKeyListener(new AlgoKeyListener(data,frame));
             new Thread(() -> {
                 run();
             }).start();
@@ -121,6 +123,10 @@ public class AlogVisualizer {
                 go(newX,newY);
             }
         }
+    }
+
+    public MazeData getMZData(){
+        return data;
     }
 
     public static void main(String[] args) {
